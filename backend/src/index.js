@@ -5,7 +5,7 @@ import express from "express";
 
 import path from "path";
 
-import { connectDB } from "./lib/db.js";
+import { connectDb } from "./lib/db.js";
 
 import { app, server } from "./lib/socket.js";
 import authRoutes from "./routes/auth.route.js";
@@ -38,5 +38,5 @@ if (process.env.NODE_ENV === "production") {
 
 server.listen(PORT, () => {
   console.log("server is running on PORT:" + PORT);
-  connectDB();
+  connectDb();
 });
