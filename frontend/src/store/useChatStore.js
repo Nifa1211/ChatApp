@@ -56,11 +56,15 @@ subscribeToMessages: () => {
   const socket = useAuthStore.getState().socket;
   if (!socket) return;
 
-  socket.off("newMessage"); // 👈 prevents duplicate listeners
+  socket.off("newMessage");
 
   socket.on("newMessage", (newMessage) => {
-    const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser._id;
-    if (!isMessageSentFromSelectedUser) return;
+    // Show message if it's from selected user OR sent by us to selected user
+    const isRelevantMessage = 
+      newMessage.senderId === selectedUser._id ||
+      newMessage.receiverId === selectedUser._id;
+      
+    if (!isRelevantMessage) return;
     set({ messages: [...get().messages, newMessage] });
   });
 },
